@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery Test Page</title>
+</head>
+<body>
+    <h1>This is a document in which to test jQuery</h1>
+    <p>Hi, this is a jQuery test document.</p>
+    <p>Scripts should be loaded right before the closing body tag
+        for the best performance.</p>
+    <form>
+        <label for="myTextField">Input Field: </label><input type="text" name="myTextField" id="myTextField" value="defaultValue"><br />
+        <input type="button" name="button1" id="button1" value="button1"><br/>
+    </form>
+
+    <p>Put name in field and click button to add to table.</p>
+    <table id="tableName">
+        <thead>
+        <tr>
+            <th>Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr></tr>
+        </tbody>
+    </table>
+
+    <form>
+        <h2 id="hideme">Hide Me</h2>
+        <input type="button" name="button2" id="button2" value="button2"><br />
+    </form>
+
+    <form>
+        <p>Enter only upper and lower case letters below. From 1 to
+            10 characters.</p>
+        <label for="validateMe">Validate this: </label><input type="text" name="validateMe" id="validateMe" value=""><br />
+        <p id="result">Press to Validate</p>
+        <input type="button" name="button3" id="button3" value="Validate"><br />
+    </form>
+
+    <form>
+        <p>Create a JSON formatted string based on a form entry.<br />
+            <label for="myName">Name: </label><input type="text" name="myName" id="myName" value=""><br />
+        <p id="jsonResult">Press to JSON'ify</p>
+        <input type="button" name="button4" id="button4" value="Validate"><br />
+    </form>
+
+    <!-- jQuery. Search up CDn and jQuery for a link. -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="test_jquery.js"></script>
+</body>
+</html>
