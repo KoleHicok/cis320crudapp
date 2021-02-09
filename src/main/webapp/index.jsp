@@ -9,5 +9,7 @@
 </h1>
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
+<br/>
+<a href="api/name_list_get">Name List Get</a>
 </body>
 </html>
