@@ -21,11 +21,11 @@ public class NameListGetServlet extends HttpServlet {
         log.log(Level.FINE, "Get people servlet");
 
         // Get setup up to output JSON text
-        response.setContentType("text/plain");
+        response.setContentType("application/json");
         PrintWriter out = response.getWriter();
 
         // Use our DAO to get a list of people
-        List <Person> peopleList = PersonDAO.getPeople();
+        List<Person> peopleList = PersonDAO.getPeople();
 
         Jsonb jsonb = JsonbBuilder.create();
         String jsonString = jsonb.toJson(peopleList);

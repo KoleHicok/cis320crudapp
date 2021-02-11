@@ -10,6 +10,8 @@
 <br/>
 <a href="hello-servlet">Hello Servlet</a>
 <br/>
-<a href="api/name_list_get">Name List Get</a>
+<a href="javascript_assignment.html">JavaScript Assignment</a>
+<br/>
+<a href="api/name_list_get">Name List Get - Database Assignment</a>
 </body>
 </html>
