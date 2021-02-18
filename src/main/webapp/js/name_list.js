@@ -12,7 +12,7 @@ function updateTable(){
                 "<td>Last Name</td><td>Email</td><td>Phone</td><td>Birthday</td></tr>");
 
         for(let i=0; i < json_result.length; i++){
-            $('#datatable tbody tr:last').after(`<tr><td>${htmlSafe(json_result[i].id)}</td><td>` +
+            $('#datatable tbody tr:last').after(`<tr><td>${json_result[i].id}</td><td>` +
                 `${htmlSafe(json_result[i].first)}</td><td>${htmlSafe(json_result[i].last)}</td><td>` +
                 `${htmlSafe(json_result[i].email)}</td><td>${htmlSafe(json_result[i].phone)}</td><td>` +
                 `${htmlSafe(json_result[i].birthday)}</td></tr>`);
