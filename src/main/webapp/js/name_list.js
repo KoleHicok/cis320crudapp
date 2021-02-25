@@ -4,6 +4,34 @@ function htmlSafe(data){
     return data.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt");
 }
 
+function formatPhoneNumber(phoneNumberString) {
+    // Strip all non-digits
+    // Use a regular expression. Match all non-digits \D
+    // and replace with an empty string.
+    let cleaned = phoneNumberString.replace(/\D/g, '');
+
+    // Are we left with 10 digits? This will return them in
+    // three groups. This: (\d{3}) grabs the first three digits \d
+    // The 'match' variable is an array. First is the entire match
+    // the next locations are each group, which are surrounded by
+    // () in the parenthesis.
+    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+        return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return phoneNumberString;
+}
+
+function getJSDateFromSQLDate(sqlDate) {
+    // Strip non-digits
+    let cleaned = sqlDate.replace(/\D/g, '');
+    // Match and group
+    let match = cleaned.match(/^(\d{4})(\d{2})(\d{2})$/);
+    // Create a new Date object
+    let resultDate = new Date(match[1], match[2], match[3]);
+    return resultDate.toLocaleDateString();
+}
+
 function updateTable(){
     let url = "api/name_list_get";
 
@@ -14,8 +42,8 @@ function updateTable(){
         for(let i=0; i < json_result.length; i++){
             $('#datatable tbody tr:last').after(`<tr><td>${json_result[i].id}</td><td>` +
                 `${htmlSafe(json_result[i].first)}</td><td>${htmlSafe(json_result[i].last)}</td><td>` +
-                `${htmlSafe(json_result[i].email)}</td><td>${htmlSafe(json_result[i].phone)}</td><td>` +
-                `${htmlSafe(json_result[i].birthday)}</td></tr>`);
+                `${htmlSafe(json_result[i].email)}</td><td>${formatPhoneNumber(htmlSafe(json_result[i].phone))}</td><td>` +
+                `${htmlSafe(getJSDateFromSQLDate(json_result[i].birthday))}</td></tr>`);
         }
 
         $('#datatable tbody tr:first').remove();
