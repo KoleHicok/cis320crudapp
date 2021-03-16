@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context>
+    <Resource name="jdbc/cis320"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxTotal="50"
+              maxWaitMillis="-1"
+              username="${user}"
+
+              password="${password}"
+
+              driverClassName="com.mysql.cj.jdbc.Driver"
+
+              url="${jdbc}"
+
+              maxActive="15"
+              maxIdle="3"
+              testOnBorrow="true"
+              removeAbandoned="true"
+              removeAbandonedTimeout="55"
+              validationQuery="SELECT 1"
+              validationInterval="34000"
+              timeBetweenEvictionRunsMillis="34000"
+              minEvictableIdleTimeMillis="55000"
+              factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+    />
+    <ResourceLink name="jdbc/cis320"
+                  global="jdbc/cis320"
+                  type="javax.sql.DataSource" />
+</Context>
