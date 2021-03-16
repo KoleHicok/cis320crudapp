@@ -36,6 +36,9 @@ function updateTable(){
     let url = "api/name_list_get";
 
     $.getJSON(url, null, function(json_result){
+        $('#datatable tbody').empty();
+        $('#datatable tbody').append("<tr><td>No Data</td></tr>")
+
         $('#datatable tbody tr:last').after("<tr><td>ID</td><td>First Name</td>" +
                 "<td>Last Name</td><td>Email</td><td>Phone</td><td>Birthday</td></tr>");
 
@@ -89,9 +92,9 @@ function showDialogAdd(){
 }
 
 function saveChanges() {
-    console.log("Saving changes!");
     let firstName = $('#firstName');
     let firstreg = /^[A-Za-z]'?[-A-Za-zÁÉÍÓÚáéíóúñ]{1,15}$/;
+    let validEntry = true;
 
     if(firstreg.test(firstName.val())){
         firstName.removeClass("is-invalid");
@@ -100,6 +103,7 @@ function saveChanges() {
     else{
         firstName.removeClass("is-valid");
         firstName.addClass("is-invalid");
+        validEntry = false;
     }
 
     let lastName = $('#lastName');
@@ -112,6 +116,7 @@ function saveChanges() {
     else{
         lastName.removeClass("is-valid");
         lastName.addClass("is-invalid");
+        validEntry = false;
     }
 
     let email = $('#email');
@@ -124,10 +129,11 @@ function saveChanges() {
     else{
         email.removeClass("is-valid");
         email.addClass("is-invalid");
+        validEntry = false;
     }
 
     let phone = $('#phone');
-    let regphone = /^\+?1?\s?\(?[0-9]{3}\)?\s?-?[0-9]{3}-?[0-9]{4}$/;
+    let regphone = /^\(?[0-9]{3}\)?\s?-?[0-9]{3}-?[0-9]{4}$/;
 
     if(regphone.test(phone.val())){
         phone.removeClass("is-invalid");
@@ -136,6 +142,7 @@ function saveChanges() {
     else{
         phone.removeClass("is-valid");
         phone.addClass("is-invalid");
+        validEntry = false;
     }
 
     let birthday = $('#birthday');
@@ -148,6 +155,33 @@ function saveChanges() {
     else{
         birthday.removeClass("is-valid");
         birthday.addClass("is-invalid");
+        validEntry = false;
+    }
+
+    if(validEntry){
+        console.log("Saving changes!");
+        let url = "api/name_list_edit";
+        let dataToServer = { first : firstName.val(),
+                             last : lastName.val(),
+                             email : email.val(),
+                             phone : phone.val().replace(/[\D]/g, ''),
+                             birthday : birthday.val()
+        };
+
+        console.log(dataToServer);
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: JSON.stringify(dataToServer),
+            success: function(dataFromServer) {
+                console.log(dataFromServer);
+                updateTable();
+                $('#myModal').modal('hide');
+            },
+            contentType: "application/json",
+            dataType: 'text' // Could be JSON or whatever too
+        });
     }
 }
 
