@@ -5,9 +5,18 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebServlet(name = "FormTestServlet", value = "/api/form_test_servlet")
 public class FormTestServlet extends HttpServlet {
+
+    private Pattern fieldnameValidationPattern;
+
+    public FormTestServlet() {
+        fieldnameValidationPattern = Pattern.compile("^[A-Za-z]{1,10}$");
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // You can output in any format, text/JSON, text/HTML, etc. We'll keep it simple
@@ -38,5 +47,12 @@ public class FormTestServlet extends HttpServlet {
 
         // Just print the data out to confirm we got it.
         out.println("fieldname='"+fieldname+"'");
+
+        Matcher m = fieldnameValidationPattern.matcher(fieldname);
+        if (m.find( )) {
+            out.println("success");
+        } else {
+            out.println("error");
+        }
     }
 }
