@@ -59,33 +59,35 @@ function showDialogAdd(){
     // Print that we got here
     console.log("Opening add item dialog");
 
-    // Clear out the values in the form.
-    // Otherwise we'll keep values from when we last
-    // opened or hit edit.
-    // I'm getting it started, you can finish.
-    $('#id').val("");
-    $('#id').removeClass("is-invalid");
-    $('#id').removeClass("is-valid");
+    let id = $('#id');
+    id.val("");
+    id.removeClass("is-invalid");
+    id.removeClass("is-valid");
 
-    $('#firstName').val("");
-    $('#firstName').removeClass("is-invalid");
-    $('#firstName').removeClass("is-valid");
+    let firstName = $('#firstName');
+    firstName.val("");
+    firstName.removeClass("is-invalid");
+    firstName.removeClass("is-valid");
 
-    $('#lastName').val("");
-    $('#lastName').removeClass("is-invalid");
-    $('#lastName').removeClass("is-valid");
+    let lastName = $('#lastName');
+    lastName.val("");
+    lastName.removeClass("is-invalid");
+    lastName.removeClass("is-valid");
 
-    $('#email').val("");
-    $('#email').removeClass("is-invalid");
-    $('#email').removeClass("is-valid");
+    let email = $('#email');
+    email.val("");
+    email.removeClass("is-invalid");
+    email.removeClass("is-valid");
 
-    $('#phone').val("");
-    $('#phone').removeClass("is-invalid");
-    $('#phone').removeClass("is-valid");
+    let phone = $('#phone');
+    phone.val("");
+    phone.removeClass("is-invalid");
+    phone.removeClass("is-valid");
 
-    $('#birthday').val("");
-    $('#birthday').removeClass("is-invalid");
-    $('#birthday').removeClass("is-valid");
+    let birthday = $('#birthday');
+    birthday.val("");
+    birthday.removeClass("is-invalid");
+    birthday.removeClass("is-valid");
 
     // Show the hidden dialog
     $('#myModal').modal('show');
