@@ -55,39 +55,33 @@ function updateTable(){
     });
 }
 
+function resetField(field){
+    field.val("");
+    field.removeClass("is-invalid");
+    field.removeClass("is-valid");
+}
+
 function showDialogAdd(){
     // Print that we got here
     console.log("Opening add item dialog");
 
     let id = $('#id');
-    id.val("");
-    id.removeClass("is-invalid");
-    id.removeClass("is-valid");
+    resetField(id);
 
     let firstName = $('#firstName');
-    firstName.val("");
-    firstName.removeClass("is-invalid");
-    firstName.removeClass("is-valid");
+    resetField(firstName);
 
     let lastName = $('#lastName');
-    lastName.val("");
-    lastName.removeClass("is-invalid");
-    lastName.removeClass("is-valid");
+    resetField(lastName);
 
     let email = $('#email');
-    email.val("");
-    email.removeClass("is-invalid");
-    email.removeClass("is-valid");
+    resetField(email);
 
     let phone = $('#phone');
-    phone.val("");
-    phone.removeClass("is-invalid");
-    phone.removeClass("is-valid");
+    resetField(phone);
 
     let birthday = $('#birthday');
-    birthday.val("");
-    birthday.removeClass("is-invalid");
-    birthday.removeClass("is-valid");
+    resetField(birthday);
 
     // Show the hidden dialog
     $('#myModal').modal('show');
