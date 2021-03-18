@@ -32,6 +32,29 @@ function getJSDateFromSQLDate(sqlDate) {
     return resultDate.toLocaleDateString();
 }
 
+function deleteItem(e){
+    console.log("Delete");
+    console.log(e.target.value);
+
+    console.log("Deleting row!");
+    let url = "api/name_list_delete";
+    let dataToServer = {id : e.target.value};
+
+    console.log(dataToServer);
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify(dataToServer),
+        success: function(dataFromServer) {
+            console.log(dataFromServer);
+            updateTable();
+        },
+        contentType: "application/json",
+        dataType: 'text'
+    });
+}
+
 function updateTable(){
     let url = "api/name_list_get";
 
@@ -51,6 +74,8 @@ function updateTable(){
         }
 
         $('#datatable tbody tr:first').remove();
+
+        $(".deleteButton").on("click", deleteItem);
 
         console.log("Done");
     });
@@ -155,8 +180,14 @@ function saveChanges() {
             data: JSON.stringify(dataToServer),
             success: function(dataFromServer) {
                 console.log(dataFromServer);
-                updateTable();
-                $('#myModal').modal('hide');
+                let result = JSON.parse(dataFromServer);
+                if ('error' in result) {
+                    alert(result.error);
+                }
+                else {
+                    updateTable();
+                    $('#myModal').modal('hide');
+                }
             },
             contentType: "application/json",
             dataType: 'text' // Could be JSON or whatever too
