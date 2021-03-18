@@ -114,7 +114,7 @@ function saveChanges() {
 
     let lastName = $('#lastName');
     let reglast = /^[A-Za-z][-'A-Za-zÁÉÍÓÚáéíóúñ]{1,20}$/;
-    if(!validateField(lastName, lastreg)){
+    if(!validateField(lastName, reglast)){
         validEntry = false;
     }
 
