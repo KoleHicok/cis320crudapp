@@ -13,11 +13,26 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 @WebServlet(name = "NameListEditServlet", value = "/api/name_list_edit")
 public class NameListEditServlet extends HttpServlet {
     private final static Logger log = Logger.getLogger(NameListEditServlet.class.getName());
+    private Pattern firstNamePattern;
+    private Pattern lastNamePattern;
+    private Pattern emailPattern;
+    private Pattern phonePattern;
+    private Pattern birthdayPattern;
+
+    public NameListEditServlet(){
+        firstNamePattern = Pattern.compile("^[A-Za-z]'?[-A-Za-zÁÉÍÓÚáéíóúñ]{1,15}$");
+        lastNamePattern = Pattern.compile("^[A-Za-z][-'A-Za-zÁÉÍÓÚáéíóúñ]{1,20}$");
+        emailPattern = Pattern.compile("^.*@.*$");
+        phonePattern = Pattern.compile("^\\(?[0-9]{3}\\)?\\s?-?[0-9]{3}-?[0-9]{4}$");
+        birthdayPattern = Pattern.compile("^[0-9]{4}-[0-9]{2}-[0-9]{2}$");
+    }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.log(Level.FINE, "doPost for NameListEditServlet");
@@ -29,16 +44,32 @@ public class NameListEditServlet extends HttpServlet {
         String requestString = new String();
         for (String line; (line = in.readLine()) != null; requestString += line);
 
+        Jsonb jsonb = JsonbBuilder.create();
+        Person personToAdd = jsonb.fromJson(requestString, Person.class);
+
         // Log the string we got as a request, just as a check
         log.log(Level.INFO, requestString);
 
-        Jsonb jsonb = JsonbBuilder.create();
-        Person personToAdd = jsonb.fromJson(requestString, Person.class);
+        Matcher firstMatcher = firstNamePattern.matcher(personToAdd.getFirst());
+        Matcher lastMatcher = lastNamePattern.matcher(personToAdd.getLast());
+        Matcher emailMatcher = emailPattern.matcher(personToAdd.getEmail());
+        Matcher phoneMatcher = phonePattern.matcher(personToAdd.getPhone());
+        Matcher birthdayMatcher = birthdayPattern.matcher(personToAdd.getBirthday());
+
+        log.log(Level.INFO, "Matchers Created");
+
+        if(!firstMatcher.find() || !lastMatcher.find() || !emailMatcher.find() || !phoneMatcher.find() ||
+                !birthdayMatcher.find()) {
+            log.log(Level.WARNING, "Invalid data passed to backend.");
+            out.println("{\"error\" : \"Invalid fields in submission.\"}");
+            return;
+        }
+
 
         // Log info as a check
         log.log(Level.INFO, "Object test: " + personToAdd.getFirst());
 
-        out.println("Object test: "+ personToAdd.getFirst());
+        out.println("{\"success\" : \"Successful Insert\"}");
 
         PersonDAO.addPerson(personToAdd);
     }
