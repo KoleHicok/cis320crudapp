@@ -62,15 +62,15 @@ function updateTable(){
         $('#datatable tbody').empty();
         $('#datatable tbody').append("<tr><td>No Data</td></tr>")
 
-        $('#datatable tbody tr:last').after("<tr><td>ID</td><td>First Name</td>" +
+        $('#datatable tbody tr:last').after("<tr><td>First Name</td>" +
                 "<td>Last Name</td><td>Email</td><td>Phone</td><td>Birthday</td><td>Actions</td></tr>");
 
         for(let i=0; i < json_result.length; i++){
-            $('#datatable tbody tr:last').after(`<tr><td>${json_result[i].id}</td><td>` +
+            $('#datatable tbody tr:last').after(`<tr><td>` +
                 `${htmlSafe(json_result[i].first)}</td><td>${htmlSafe(json_result[i].last)}</td><td>` +
                 `${htmlSafe(json_result[i].email)}</td><td>${formatPhoneNumber(htmlSafe(json_result[i].phone))}</td><td>` +
-                `${htmlSafe(getJSDateFromSQLDate(json_result[i].birthday))}</td>` +
-                `<td><button type='button' name='delete' class='deleteButton btn btn-danger' value="${json_result[i].id}">Delete</button></td></tr>`);
+                `${htmlSafe(getJSDateFromSQLDate(json_result[i].birthday))}</td><td>` +
+                `<button type='button' name='delete' class='deleteButton btn btn-danger' value="${json_result[i].id}">Delete</button></td></tr>`);
         }
 
         $('#datatable tbody tr:first').remove();
