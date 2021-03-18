@@ -87,70 +87,52 @@ function showDialogAdd(){
     $('#myModal').modal('show');
 }
 
-function saveChanges() {
-    let firstName = $('#firstName');
-    let firstreg = /^[A-Za-z]'?[-A-Za-zÁÉÍÓÚáéíóúñ]{1,15}$/;
+function validateField(fieldName, fieldRegex){
     let validEntry = true;
 
-    if(firstreg.test(firstName.val())){
-        firstName.removeClass("is-invalid");
-        firstName.addClass("is-valid");
+    if(fieldRegex.test(fieldName.val())){
+        fieldName.removeClass("is-invalid");
+        fieldName.addClass("is-valid");
     }
     else{
-        firstName.removeClass("is-valid");
-        firstName.addClass("is-invalid");
+        fieldName.removeClass("is-valid");
+        fieldName.addClass("is-invalid");
+        validEntry = false;
+    }
+
+    return validEntry;
+}
+
+function saveChanges() {
+    let validEntry = true;
+
+    let firstName = $('#firstName');
+    let firstreg = /^[A-Za-z]'?[-A-Za-zÁÉÍÓÚáéíóúñ]{1,15}$/;
+    if(!validateField(firstName, firstreg)){
         validEntry = false;
     }
 
     let lastName = $('#lastName');
     let reglast = /^[A-Za-z][-'A-Za-zÁÉÍÓÚáéíóúñ]{1,20}$/;
-
-    if(reglast.test(lastName.val())){
-        lastName.removeClass("is-invalid");
-        lastName.addClass("is-valid");
-    }
-    else{
-        lastName.removeClass("is-valid");
-        lastName.addClass("is-invalid");
+    if(!validateField(lastName, lastreg)){
         validEntry = false;
     }
 
     let email = $('#email');
     let regemail = /^.*@.*$/;
-
-    if(regemail.test(email.val())){
-        email.removeClass("is-invalid");
-        email.addClass("is-valid");
-    }
-    else{
-        email.removeClass("is-valid");
-        email.addClass("is-invalid");
+    if(!validateField(email, regemail)){
         validEntry = false;
     }
 
     let phone = $('#phone');
     let regphone = /^\(?[0-9]{3}\)?\s?-?[0-9]{3}-?[0-9]{4}$/;
-
-    if(regphone.test(phone.val())){
-        phone.removeClass("is-invalid");
-        phone.addClass("is-valid");
-    }
-    else{
-        phone.removeClass("is-valid");
-        phone.addClass("is-invalid");
+    if(!validateField(phone, regphone)){
         validEntry = false;
     }
 
     let birthday = $('#birthday');
     let regBday = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/;
-
-    if(regBday.test(birthday.val())){
-        birthday.removeClass("is-invalid");
-        birthday.addClass("is-valid");
-    }
-    else{
-        birthday.removeClass("is-valid");
-        birthday.addClass("is-invalid");
+    if(!validateField(birthday, regBday)){
         validEntry = false;
     }
 
