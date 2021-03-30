@@ -25,6 +25,7 @@ public class NameListEditServlet extends HttpServlet {
     private Pattern emailPattern;
     private Pattern phonePattern;
     private Pattern birthdayPattern;
+    private Pattern idPattern;
 
     public NameListEditServlet(){
         firstNamePattern = Pattern.compile("^[A-Za-z]'?[-A-Za-zÁÉÍÓÚáéíóúñ]{1,15}$");
@@ -65,12 +66,18 @@ public class NameListEditServlet extends HttpServlet {
             return;
         }
 
-
         // Log info as a check
-        log.log(Level.INFO, "Object test: " + personToAdd.getFirst());
+        log.log(Level.INFO, "Object test: " + personToAdd.getId());
+
+        if(personToAdd.getId() == 0){
+            log.log(Level.INFO, "Adding Person");
+            PersonDAO.addPerson(personToAdd);
+        }
+        else{
+            log.log(Level.INFO, "Updating Person");
+            PersonDAO.updatePerson(personToAdd);
+        }
 
         out.println("{\"success\" : \"Successful Insert\"}");
-
-        PersonDAO.addPerson(personToAdd);
     }
 }

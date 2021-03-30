@@ -135,6 +135,53 @@ public class PersonDAO {
             catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
         }
     }
+
+    public static void updatePerson(Person personToUpdate){
+        log.log(Level.FINE, "Update person");
+
+        // Declare our variables
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        // Databases are unreliable. Use some exception handling
+        try {
+            // Get our database connection
+            conn = DBHelper.getConnection();
+
+            // This string  is our SQL query.
+            String sql = "UPDATE person SET first = ?, last = ?, email = ?, phone = ?, birthday = ? WHERE id = ?";
+
+            // Create an object with all the info about our SQL statement to run.
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, personToUpdate.getFirst());
+            stmt.setString(2, personToUpdate.getLast());
+            stmt.setString(3, personToUpdate.getEmail());
+            stmt.setString(4, personToUpdate.getPhone());
+            stmt.setString(5, personToUpdate.getBirthday());
+            stmt.setString(6, Integer.toString(personToUpdate.getId()));
+
+
+            // If you had parameters, they would be set wit something like:
+            // stmt.setString(1, "1");
+
+            // Execute the SQL
+            stmt.executeUpdate();
+
+        } catch (SQLException se) {
+            log.log(Level.SEVERE, "SQL Error", se );
+        } catch (Exception e) {
+            log.log(Level.SEVERE, "Error", e );
+        } finally {
+            // Ok, close our statement and connection
+            try { if(stmt != null) stmt.close(); }
+            catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+
+            try { if(conn != null) conn.close(); }
+            catch (Exception e) { log.log(Level.SEVERE, "Error", e ); }
+        }
+    }
+
     public static void deletePerson(Person personToDelete){
         log.log(Level.FINE, "Delete person");
 
